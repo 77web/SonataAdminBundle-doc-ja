@@ -128,7 +128,7 @@ CommentAdmin
     class CommentAdmin extends Admin
     {
 
-        protected $class = 'Application\NewsBundle\Entity\Comment';
+        protected $class = 'Application\Sonata\NewsBundle\Entity\Comment';
 
         protected $list_fields = array(
             'name' => array('identifier' => true),

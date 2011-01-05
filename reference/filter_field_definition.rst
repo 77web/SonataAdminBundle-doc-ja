@@ -45,7 +45,7 @@ Example
 
             $query_builder->leftJoin(sprintf('%s.comments', $alias), 'c');
             $query_builder->andWhere('c.status = :status');
-            $query_builder->setParameter('status', \Application\NewsBundle\Entity\Comment::STATUS_MODERATE);
+            $query_builder->setParameter('status', \Application\Sonata\NewsBundle\Entity\Comment::STATUS_MODERATE);
         }
 
         public function getWithOpenCommentField($filter)

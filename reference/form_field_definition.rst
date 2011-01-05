@@ -32,7 +32,7 @@ Example
         public function configureFormFields()
         {
             $this->form_fields['comments_default_status']['type'] = 'choice';
-            $this->form_fields['comments_default_status']['options']['choices'] = \Application\NewsBundle\Entity\Comment::getStatusList();
+            $this->form_fields['comments_default_status']['options']['choices'] = \Application\Sonata\NewsBundle\Entity\Comment::getStatusList();
         }
     }
 

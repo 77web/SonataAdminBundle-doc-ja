@@ -83,5 +83,5 @@ Once you have created an admin class, you must declare the class to use it. Like
                 label:      Comment
                 group:      blog
                 class:      Bundle\Sonata\NewsBundle\Admin\CommentAdmin
-                entity:     Application\NewsBundle\Entity\Comment
+                entity:     Application\Sonata\NewsBundle\Entity\Comment
                 controller: Bundle\Sonata\NewsBundle\Controller\CommentAdminController
