@@ -42,7 +42,6 @@ SonataAdminBundle は機能を実装するにあたって他のバンドルに�
 SonataAdminBundle を動かすためには、ステップ2で説明したデータ保存用のバンドルの他に、下記のバンドルが必要です。 
 
     - `SonataBlockBundle <http://sonata-project.org/bundles/block/master/doc/reference/installation.html>`_
-    - `SonatajQueryBundle <https://github.com/sonata-project/SonatajQueryBundle/blob/master/Resources/doc/reference/installation.rst>`_
     - `KnpMenuBundle <https://github.com/KnpLabs/KnpMenuBundle/blob/master/Resources/doc/index.md#installation>`_ (Version 1.1.*)
 
 上記の依存バンドルは SonataAdminBundle の依存ライブラリとして、 composer が自動的にダウンロードしてくれます。
@@ -61,7 +60,6 @@ SonataAdminBundle も忘れずに有効化してください。
             // 依存バンドルを有効化
             new Sonata\CoreBundle\SonataCoreBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
-            new Sonata\jQueryBundle\SonatajQueryBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             //...
 
@@ -79,6 +77,10 @@ SonataAdminBundle も忘れずに有効化してください。
 
 .. note::
     依存バンドルがプロジェクトの AppKernel.php の中で既に有効化されている場合は再度有効化する必要はありません。
+
+.. note::
+    Since version 2.3 > SonatajQueryBundle is not required anymore as assets are available in this
+    bundle. The bundle is also registered in bower.io so you can use bower to handle your assets.
 
 SonataAdminBundle の依存バンドルの設定
 ------------------------------------------
