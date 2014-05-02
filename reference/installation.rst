@@ -1,33 +1,30 @@
-Installation
-============
+インストール
+==============
 
-SonataAdminBundle can be installed at any moment during a project's lifecycle,
-whether it's a clean Symfony2 installation or an existing project.
+SonataAdminBundle は、Symfony2 をクリーンインストールした状態か、既にあるプロジェクトなのかを問わず、プロジェクトのライフサイクルのどの段階からでも導入できます。
 
-Downloading the code
---------------------
+ソースコードのダウンロード
+---------------------------
 
-Use composer to manage your dependencies and download SonataAdminBundle:
+依存関係の管理と SonataAdminBundle のダウンロードには composer を使ってください。
 
 .. code-block:: bash
 
     php composer.phar require sonata-project/admin-bundle
 
-You'll be asked to type in a version constraint. 'dev-master' will get you the latest
-version, compatible with the latest Symfony2 version. Check `packagist <https://packagist.org/packages/sonata-project/admin-bundle>`_
-for older versions:
+
+すると、バージョンの指定をタイプするように求められます。 'dev-master' とすると、 Symfony2 の最新版に対応する最新版を使うことができます。
+以前のバージョンを使いたい場合は `packagist <https://packagist.org/packages/sonata-project/admin-bundle>`_ を参照してください。
 
 .. code-block:: bash
 
     Please provide a version constraint for the sonata-project/admin-bundle requirement: dev-master
 
-Selecting and downloading a storage bundle
-------------------------------------------
+保存形式に合わせたバンドルの選択とダウンロード
+------------------------------------------------
 
-SonataAdminBundle is storage agnostic, meaning it can work with several storage
-mechanism. Depending on which you are using on your project, you'll need to install
-one of the following bundles. In the respective links you'll find simple installation
-instructions for each of them:
+SonataAdminBundle は保存形式を問いません。つまり、複数の保存形式に対応しています。プロジェクトで使っているデータ保存形式によって、下記のいずれかのバンドルをインストールする必要があります。
+リンク先には各バンドルのインストール方法の説明があります。
 
     - `SonataDoctrineORMAdminBundle <http://sonata-project.org/bundles/doctrine-orm-admin/master/doc/reference/installation.html>`_
     - `SonataDoctrineMongoDBAdminBundle <https://github.com/sonata-project/SonataDoctrineMongoDBAdminBundle/blob/master/Resources/doc/reference/installation.rst>`_
@@ -35,22 +32,22 @@ instructions for each of them:
     - `SonataDoctrinePhpcrAdminBundle <https://github.com/sonata-project/SonataDoctrinePhpcrAdminBundle/blob/master/Resources/doc/reference/installation.rst>`_
 
 .. note::
-    Don't know which to choose? Most new users prefer SonataDoctrineORMAdmin, to interact with traditional relational databases (MySQL, PostgreSQL, etc)
+    どれを選べば良いかわからないですか？大抵の場合、このバンドルを新しく使う人にとっては伝統的なリレーショナルデータベース（MySQL, PostgreSQL 等）を使う SonataDoctrineORMAdminBundle が良いでしょう。
 
-Enabling SonataAdminBundle and its dependencies
+
+SonataAdminBundle と依存バンドルの有効化
 -----------------------------------------------
 
-SonataAdminBundle relies on other bundles to implement some features.
-Besides the storage layer mentioned on step 2, there are other bundles needed
-for SonataAdminBundle to work:
+SonataAdminBundle は機能を実装するにあたって他のバンドルに依存しています。
+SonataAdminBundle を動かすためには、ステップ2で説明したデータ保存用のバンドルの他に、下記のバンドルが必要です。 
 
     - `SonataBlockBundle <http://sonata-project.org/bundles/block/master/doc/reference/installation.html>`_
     - `SonatajQueryBundle <https://github.com/sonata-project/SonatajQueryBundle/blob/master/Resources/doc/reference/installation.rst>`_
     - `KnpMenuBundle <https://github.com/KnpLabs/KnpMenuBundle/blob/master/Resources/doc/index.md#installation>`_ (Version 1.1.*)
 
-These bundles are automatically downloaded by composer as a dependency of SonataAdminBundle.
-However, you have to enable them in your AppKernel.php, and configure them manually. Don't
-forget to enable SonataAdminBundle too:
+上記の依存バンドルは SonataAdminBundle の依存ライブラリとして、 composer が自動的にダウンロードしてくれます。
+しかし、開発者は手動で、プロジェクトの AppKernel.php でこの依存バンドルを有効化し、バンドルの設定をしなければなりません。
+SonataAdminBundle も忘れずに有効化してください。
 
 .. code-block:: php
 
@@ -61,38 +58,35 @@ forget to enable SonataAdminBundle too:
         return array(
             // ...
 
-            // Add your dependencies
+            // 依存バンドルを有効化
             new Sonata\CoreBundle\SonataCoreBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
             new Sonata\jQueryBundle\SonatajQueryBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             //...
 
-            // If you haven't already, add the storage bundle
-            // This example uses SonataDoctrineORMAdmin but
-            // it works the same with the alternatives
+            // まだ有効化していなければ、データ保存形式ごとの
+            // バンドルも有効化してください。
+            // この例では SonataDoctrineORMAdminBundleを使っていますが
+            // 他のバンドルでも同じようにしてください。
             new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
 
-            // Then add SonataAdminBundle
+            // SonataAdminBundleを有効化
             new Sonata\AdminBundle\SonataAdminBundle(),
             // ...
         );
     }
 
 .. note::
-    If a dependency is already enabled somewhere in your AppKernel.php,
-    you don't need to enable it again.
+    依存バンドルがプロジェクトの AppKernel.php の中で既に有効化されている場合は再度有効化する必要はありません。
 
-
-Configuring SonataAdminBundle dependencies
+SonataAdminBundle の依存バンドルの設定
 ------------------------------------------
 
-You will need to configure SonataAdminBundle's dependencies. For each of the above
-mentioned bundles, check their respective installation/configuration instructions
-files to see what changes you have to make to your Symfony2 configuration.
+SonataAdminBundle の依存バンドルを設定しましょう。 Symfony2 の設定をどのように変更する必要があるのかについては、各バンドルのインストールや設定に関するドキュメントを参照してください。
 
-SonataAdminBundle provides a SonataBlockBundle block that's used on the administration
-dashboard. To be able to use it, make sure it's enabled on SonataBlockBundle's configuration:
+SonataAdminBundle は、管理画面のダッシュボードで利用できる SonataBlockBundle のブロックを提供しています。
+このブロックを利用するためには、 SonataBlockBundle の設定でブロックを確実に有効化してください。
 
 .. configuration-block::
 
@@ -102,43 +96,40 @@ dashboard. To be able to use it, make sure it's enabled on SonataBlockBundle's c
         sonata_block:
             default_contexts: [cms]
             blocks:
-                # Enable the SonataAdminBundle block
+                # SonataAdminBundle のブロックを有効化
                 sonata.admin.block.admin_list:
                     contexts:   [admin]
-                # Your other blocks
+                # 他のブロック
 
 .. note::
-    Don't worry too much if, at this point, you don't yet understand fully
-    what a block is. SonataBlockBundle is a useful tool, but it's not vital
-    that you understand right now.
+    心配しないでください。少なくともこの段階では、ブロックとは何なのか完全に理解している必要はありません。
+    SonataBlockBundle は便利なツールですが、すぐに理解できなくても問題はありません。
 
-Cleaning up
------------
+キャッシュクリア
+-----------------
 
-Now, install the assets from the bundles:
+バンドルのアセットをインストールしましょう。
 
 .. code-block:: bash
 
     php app/console assets:install web
 
-Usually, when installing new bundles, it's good practice to also delete your cache:
+新しいバンドルを追加したときにはキャッシュを削除するほうが良いです。
 
 .. code-block:: bash
 
     php app/console cache:clear
 
-At this point, your Symfony2 installation should be fully functional, with no errors
-showing up from SonataAdminBundle or its dependencies. SonataAdminBundle is installed
-but not yet configured (more on that in the next section), so you won't be able to
-use it yet.
+この時点では、 Symfony2 のプロジェクトは、SonataAdminBundle とその依存バンドルに由来するエラーが表示されること無く、機能しているはずです。
+SonataAdminBundle はインストールされていますが、まだ設定されていません（設定については次のセクションで説明します）。つまり、 SonataAdminBundle を使うことはまだできないのです。
 
-If, at this point or during the installation, you come across any errors, don't panic:
+この時点あるいはインストールの途中で何かエラーが発生しても落ち着いてください。
 
-    -  Read the error message carefully. Try to find out exactly which bundle is causing the error. Is it SonataAdminBundle or one of the dependencies?
-    - Make sure you followed all the instructions correctly, for both SonataAdminBundle and it's dependencies
-    - Odds are that someone already had the same problem, and it's documented somewhere. Check `Google <http://www.google.com>`_, `Sonata Users Group <https://groups.google.com/group/sonata-users>`_, `Symfony2 Users Group <https://groups.google.com/group/symfony2>`_ and `Symfony Forum <forum.symfony-project.org>`_ to see if you can find a solution.
-    - Still no luck? Try checking the project's open issues on GitHub.
+    - エラーメッセージを注意深く読んでください。正確にどのバンドルがエラーを引き起こしているのか見極めてみましょう。 SonataAdminBundle なのか、依存バンドルのどれかなのか？
+    - SonataAdminBundle と依存バンドル両方について、全ての手順を正確に実行したか確認してください。 
+    - もしかしたら、既に誰かが同じエラーに行き当たって、解決方法が書かれているかもしれません。 `Google <http://www.google.com>`_, `Sonata Users Group <https://groups.google.com/group/sonata-users>`_, `Symfony2 Users Group <https://groups.google.com/group/symfony2>`_, `Symfony Forum <forum.symfony-project.org>`_ をチェックしてみてください。
+    - それでもまだ解決できなければ、 Github で未解決の issue をチェックしてみてください。
 
-After you have successfully installed the above bundles you need to configure
-SonataAdminBundle for administering your models. All that is needed to quickly
-set up SonataAdminBundle is described in the :doc:`getting_started` chapter.
+上に出てきたバンドルのインストールに成功した後、プロジェクトのモデルを管理するためには、 SonataAdminBundle を設定する必要があります。
+SonataAdminBundle を素早くセットアップするために必要な設定については :doc:`getting_started` で説明します。
+
