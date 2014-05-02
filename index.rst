@@ -1,18 +1,18 @@
 Admin Bundle
 ============
 
-**SonataAdminBundle is split into 5 bundles:**
+**SonataAdminBundle は5つのバンドルに分かれています。**
 
-* SonataAdminBundle: contains core libraries and services
-* `SonataDoctrineORMAdminBundle <https://github.com/sonata-project/SonataDoctrineORMAdminBundle>`_: integrates Doctrine ORM project with the core admin bundle
-* `SonataDoctrineMongoDBAdminBundle <https://github.com/sonata-project/SonataDoctrineMongoDBAdminBundle>`_: integrates MongoDB with the core admin bundle (early stage)
-* `SonataDoctrinePhpcrAdminBundle <https://github.com/sonata-project/SonataDoctrinePhpcrAdminBundle>`_: integrates PHPCR with the core admin bundle (early stage)
-* `SonataPropelAdminBundle <https://github.com/sonata-project/SonataPropelAdminBundle>`_: integrates Propel with the core admin bundle (early stage)
+* SonataAdminBundle: コアのライブラリとサービス 
+* `SonataDoctrineORMAdminBundle <https://github.com/sonata-project/SonataDoctrineORMAdminBundle>`_: Doctrine ORM とコアの admin bundle の連携
+* `SonataDoctrineMongoDBAdminBundle <https://github.com/sonata-project/SonataDoctrineMongoDBAdminBundle>`_: MongoDB とコアの admin bundle の連携（early stage）
+* `SonataDoctrinePhpcrAdminBundle <https://github.com/sonata-project/SonataDoctrinePhpcrAdminBundle>`_: PHPCR とコアの admin bundle の連携（early stage）
+* `SonataPropelAdminBundle <https://github.com/sonata-project/SonataPropelAdminBundle>`_: Propel とコアの admin bundle の連携（early stage）
 
-The demo website can be found in http://demo.sonata-project.org/admin/dashboard (admin as user and password).
+デモサイトは http://demo.sonata-project.org/admin/dashboard にあります。（ユーザー名・パスワードともに admin ）
 
-Reference Guide
----------------
+リファレンスガイド
+-------------------
 
 .. toctree::
    :maxdepth: 1
@@ -47,8 +47,8 @@ Reference Guide
    reference/preview_mode
    reference/troubleshooting
 
-Cookbook
---------
+クックブック
+---------------
 
 .. toctree::
    :maxdepth: 1
@@ -60,3 +60,4 @@ Cookbook
    cookbook/recipe_sortable_listing
    cookbook/recipe_dynamic_form_modification
    cookbook/recipe_custom_action
+
