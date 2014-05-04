@@ -1,21 +1,19 @@
-Getting started with SonataAdminBundle
+SonataAdminBundle を始めよう
 ======================================
 
-If you followed the installation instructions, SonataAdminBundle should be installed
-but inaccessible. You first need to configure it for your models before you can
-start using it. Here is a quick checklist of what is needed to quickly setup
-SonataAdminBundle and create your first admin interface for the models of your application:
+インストール手順を完了したなら、 SonataAdminBundle はインストールされていますがアクセスできない状態になっています。
+SonataAdminBundle を使い始める前に、最初にプロジェクトのモデルに合わせて設定する必要があります。
+下記は SonataAdminBundle を素早く設定し、アプリケーションのモデルの最初の管理画面を作るための、簡単なチェックリストです。
 
-* Step 1: Define SonataAdminBundle routes
-* Step 2: Create an Admin class
-* Step 3: Create an Admin service
-* Step 4: Configuration
+* ステップ1: SonataAdminBundle のルーティング設定を定義する
+* ステップ2: Admin クラスを作成する
+* ステップ3: Admin サービスを作成する
+* ステップ4: 設定する
 
-Step 1: Define SonataAdminBundle routes
----------------------------------------
+ステップ1: SonataAdminBundle のルーティング設定を定義する
+-----------------------------------------------------------
 
-To be able to access SonataAdminBundle's pages, you need to add its routes
-to your application's routing file:
+SonataAdminBundle のページにアクセスできるようにするためには、アプリケーションのルーティング設定ファイルに SonataAdminBundle のページのルーティング設定を追加する必要があります。
 
 .. configuration-block::
 
@@ -33,37 +31,35 @@ to your application's routing file:
 
 .. note::
 
-    If you're using XML or PHP to specify your application's configuration,
-    the above routing configuration must be placed in routing.xml or
-    routing.php according to your format (i.e. XML or PHP).
+    アプリケーションの設定ファイルとして XML や PHP 形式の設定ファイルを
+    使っている場合、上記のルーティング設定は、使っているファイル形式によって
+    routing.xml あるいは routing.php ファイルの中に追加しなければなりません。
 
 .. note::
 
-    For those curious about the ``resource: .`` setting: it is unusual syntax but used
-    because Symfony requires a resource to be defined (which points to a real file).
-    Once this validation passes Sonata's ``AdminPoolLoader`` is in charge of processing
-    this route and it simply ignores the resource setting.
+    ``resource: .`` 設定がどういう意味か気になった開発者のために。
+    この書き方は通常の書き方ではありませんが、 Symfony がこの設定を要求し、
+    しかも実際のファイルを指していなければならないために定義されています。
+    Symfony によるバリデーションさえパスしてしまえば、 Sonata の ``AdminPoolLoader``
+    がルーティングを処理し、 resource の設定は無視されます。
 
-At this point you can already access the (empty) admin dashboard by visiting the url:
-``http://yoursite.local/admin/dashboard``.
+この時点で既に、下記のURLにアクセスすると、管理画面のダッシュボード（ただし、空っぽの）にアクセスすることができるはずです。
+``http://yoursite.local/admin/dashboard``
 
 
-Step 2: Create an Admin class
------------------------------
+ステップ2: Admin クラスを作成する
+-----------------------------------
 
-SonataAdminBundle helps you manage your data using a graphic interface that
-will let you create, update or search your model's instances. Those actions need to
-be configured, which is done using an Admin class.
+SonataAdminBundle を使うことで、データの作成・更新・検索をGUIによるデータ管理が簡単にできるようになります。
+データ管理のためのアクションを使うためには設定が必要ですが、その設定は Admin クラスを使って行うことができます。
 
-An Admin class represents the mapping of your model to each administration action.
-In it, you decide which fields to show on a listing, which to use as filters or what
-to show on an creation/edition form.
+Admin クラスは、アプリケーションのモデルを各管理アクションへの関連づけを表すものです。
+どのフィールドを一覧に表示し、どのフィールドを検索に使用し、どのフィールドを登録・編集フォームに含めるか、開発者はこの Admin クラスの中で指定することができます。
 
-The easiest way to create an Admin class for your model is to extend
-the ``Sonata\AdminBundle\Admin\Admin`` class.
+最も簡単にアプリケーションのモデルについての Admin クラスを作成するには ``Sonata\AdminBundle\Admin\Admin`` クラスを継承します。
 
-Suppose your AcmeDemoBundle has a Post entity. This is how a basic Admin class
-for it could look like:
+アプリケーションの AcmeDemoBundle に Post エンティティがあるとします。
+このモデルのための基本的な Admin クラスは下記のようになります。
 
 .. code-block:: php
 
@@ -79,17 +75,17 @@ for it could look like:
 
    class PostAdmin extends Admin
    {
-       // Fields to be shown on create/edit forms
+       // 登録・編集フォームに表示されるフィールド
        protected function configureFormFields(FormMapper $formMapper)
        {
            $formMapper
                ->add('title', 'text', array('label' => 'Post Title'))
                ->add('author', 'entity', array('class' => 'Acme\DemoBundle\Entity\User'))
-               ->add('body') //if no type is specified, SonataAdminBundle tries to guess it
+               ->add('body') //タイプを指定しなかった場合は SonataAdminBundle が推測しようとします
            ;
        }
 
-       // Fields to be shown on filter forms
+       // 検索フォームに表示されるフィールド
        protected function configureDatagridFilters(DatagridMapper $datagridMapper)
        {
            $datagridMapper
@@ -98,7 +94,7 @@ for it could look like:
            ;
        }
 
-       // Fields to be shown on lists
+       // 一覧に表示されるフィールド
        protected function configureListFields(ListMapper $listMapper)
        {
            $listMapper
@@ -109,18 +105,16 @@ for it could look like:
        }
    }
 
-Implementing these three functions is the first step to creating an Admin class.
-Other options are available, that will let you further customize the way your model
-is shown and handled. Those will be covered in more advanced chapters of this manual.
+上記の3つのメソッドを実装することが Admin クラス作成の最初のステップです。
+アプリケーションのモデルの操作や表示をより自由にカスタマイズできる他のオプションもあります。他のオプションについては、このマニュアルのもっと後の章で説明します。
 
-Step 3: Create an Admin service
--------------------------------
+ステップ3: Admin サービスを定義する
+--------------------------------------
 
-Now that you have created your Admin class, you need to create a service for it. This
-service needs to have the ``sonata.admin`` tag, which is your way of letting
-SonataAdminBundle know that this particular service represents an Admin class:
+アプリケーションの Admin クラスを作成し終わったら、サービスとして定義する必要があります。
+サービスには、 ``sonata.admin`` タグが必要で、このタグによって SonataAdminBundle ではサービスが Admin クラスであることを認識します。
 
-Create either a new ``admin.xml`` or ``admin.yml`` file inside the ``Acme/DemoBundle/Resources/config/`` folder:
+新しく ``admin.xml`` 又は ``admin.yml`` を ``Acme/DemoBundle/Resources/config/`` フォルダ内に作成してください。
 
 .. configuration-block::
 
@@ -159,27 +153,25 @@ Create either a new ``admin.xml`` or ``admin.yml`` file inside the ``Acme/DemoBu
                calls:
                    - [ setTranslationDomain, [AcmeDemoBundle]]
 
-The basic configuration of an Admin service is quite simple. It creates a service
-instance based on the class you specified before, and accepts three arguments:
+Admin サービスの基本的な設定はとてもシンプルです。
+ステップ2で作成したクラスのインスタンスをサービスとして作成し、3つの引数を受け取ります。
 
-    1. The Admin service's code (defaults to the service's name)
-    2. The model which this Admin class maps (required)
-    3. The controller that will handle the administration actions (defaults to SonataAdminBundle:CRUDController)
+    1. Admin サービスのコード（デフォルト値はサービスの名前）
+    2. Admin クラスがマッピングされるモデル名（必須）
+    3. 管理画面のアクションを担当するコントローラー名（デフォルト値は SonataAdminBundle:CRUDController）
 
-Usually you just need to specify the second argument, as the first and third's default
-values will work for most scenarios.
+大抵のアプリケーションでは1つ目と3つ目の引数についてはデフォルト値のままで動作するため、通常は開発者は2つ目の引数だけを指定すれば事足ります。
 
-The ``setTranslationDomain`` call lets you choose which translation domain to use when
-translating labels on the admin pages. More info on the `symfony translations page`_.
+``setTranslationDomain`` の呼び出しにより、管理ページの翻訳ドメインとして何を使うか指定することができます。
+詳しくは `symfony translations page`_ を参照してください。
 
-Now that you have a configuration file with you admin service, you just need to tell
-Symfony2 to load it. There are two ways to do so:
 
-1 - Importing it in the main config.yml
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Admin サービスの設定ファイルができたら、あとは Symfony2 に読み込ませるだけです。それには2つの方法があります。
 
-Include your new configuration file in the main config.yml (make sure that you
-use the correct file extension):
+1 - メインの config.yml からインポートする
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+新しい設定ファイルをメインの config.yml から読み込ませます。（正しいファイル形式を使っていることを確認してください）
 
 .. configuration-block::
 
@@ -189,11 +181,11 @@ use the correct file extension):
         imports:
             - { resource: @AcmeDemoBundle/Resources/config/admin.xml }
 
-2 - Have your bundle load it
+2 - バンドルに読み込ませる
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You can also have your bundle load the admin configuration file. Inside your bundle's extension
-file, using the ``load()`` method as described in the `symfony cookbook`_.
+バンドルに admin 設定ファイルを読み込ませることもできます。
+バンドルの extension ファイルの中、 `symfony cookbook`_ で説明されているように ``load()`` メソッドを使って読み込ませます。
 
 .. configuration-block::
 
@@ -233,23 +225,24 @@ file, using the ``load()`` method as described in the `symfony cookbook`_.
             }
         }
 
-Step 4: Configuration
+ステップ 4: 設定する
 ---------------------
 
-At this point you have basic administration actions for your model. If you visit ``http://yoursite.local/admin/dashboard`` again, you should now see a panel with
-your model mapped. You can start creating, listing, editing and deleting instances.
+この時点で、アプリケーションのモデルのための基本的な管理アクションが使えるようになっています。
 
-You probably want to put your own project's name and logo on the top bar.
+``http://yoursite.local/admin/dashboard`` に再度アクセスすると、マッピングしたモデルのパネルが表示されます。データを作成したり、一覧で見たり、編集したり、削除したりできます。
 
-Put your logo file here ``src/Acme/DemoBundle/Resources/public/img/fancy_acme_logo.png``
+プロジェクトの名前とロゴをページトップのバーに表示したくなるでしょう。
+
+プロジェクトのロゴファイルを ``src/Acme/DemoBundle/Resources/public/img/fancy_acme_logo.png`` に配置してください。
     
-Install your assets:
+アセットをインストールします。
 
 .. code-block:: sh
 
     $ php app/console assets:install
 
-Now you can change your project's main config.yml file:
+プロジェクトのメインの config.yml を下記のように変更します。
 
 .. configuration-block::
 
@@ -262,20 +255,15 @@ Now you can change your project's main config.yml file:
 
 
 
-Next steps - Security
+次のステップ　認証
 ---------------------
 
-As you probably noticed, you were able to access your dashboard and data by just
-typing in the URL. By default, the SonataAdminBundle does not come with any user
-management for ultimate flexibility. However, it is most likely that your application
-requires such feature. The Sonata Project includes a ``SonataUserBundle`` which
-integrates the very popular ``FOSUserBundle``. Please refer to the :doc:`security` section of
-this documentation for more information.
+もう気づいているかもしれませんが、URLをタイプするだけで管理画面ダッシュボードとデータにアクセスできています。
+デフォルトでは、柔軟性を最大に高めるために、 SonataAdminBundle はユーザー認証の仕組みを備えていません。しかし、アプリケーションにはおそらくその機能が必要でしょう。 Sonata Project はとても有名な ``FOSUserBundle`` と連携するための ``SonataUserBundle`` を開発しています。詳しくはこのドキュメントの :doc:`security` セクションを参照してください。
 
-Congratulations! You are ready to start using SonataAdminBundle. You can now map
-additional models or explore advanced functionalities. The following sections will
-each address a specific section or functionality of the bundle, giving deeper
-details on what can be configured and achieved with SonataAdminBundle.
+おめでとうございます！これで SonataAdminBundle を使い始めることができます。他のモデルの管理画面を作成することができ、また、既に作成したモデルの管理画面をカスタマイズすることもできます。
+続きの各章では、バンドルの部品や機能ごとに、どんな設定ができるか、 SonataAdminBundle を使ってどんなことができるのかより詳しく解説しています。
 
 .. _`symfony cookbook`: http://symfony.com/doc/master/cookbook/bundles/extension.html#using-the-load-method
 .. _`symfony translations page`: http://symfony.com/doc/current/book/translation.html#using-message-domains
+
