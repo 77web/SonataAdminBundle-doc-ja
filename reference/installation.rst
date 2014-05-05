@@ -79,8 +79,8 @@ SonataAdminBundle も忘れずに有効化してください。
     依存バンドルがプロジェクトの AppKernel.php の中で既に有効化されている場合は再度有効化する必要はありません。
 
 .. note::
-    Since version 2.3 > SonatajQueryBundle is not required anymore as assets are available in this
-    bundle. The bundle is also registered in bower.io so you can use bower to handle your assets.
+    バージョン2.3以上ではアセットはバンドル内に含まれるようになり、 SonatajQueryBundle は必要なくなりました。
+    バンドルは bower.io にも登録されており、 bower を使ってアセットを管理することもできるようになりました。
 
 SonataAdminBundle の依存バンドルの設定
 ------------------------------------------
